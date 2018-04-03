@@ -148,7 +148,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.FontSize = MetroFramework.MetroButtonSize.Medium;
+            this.btnStart.FontSize = MetroFramework.MetroButtonSize.Tall;
             this.btnStart.Location = new System.Drawing.Point(87, 427);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(88, 50);
@@ -159,7 +159,7 @@
             // 
             // btnQuit
             // 
-            this.btnQuit.FontSize = MetroFramework.MetroButtonSize.Medium;
+            this.btnQuit.FontSize = MetroFramework.MetroButtonSize.Tall;
             this.btnQuit.Location = new System.Drawing.Point(337, 427);
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(88, 50);
@@ -177,11 +177,10 @@
             // 
             this.labCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labCounter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.labCounter.Location = new System.Drawing.Point(209, 390);
+            this.labCounter.Location = new System.Drawing.Point(197, 403);
             this.labCounter.Name = "labCounter";
-            this.labCounter.Size = new System.Drawing.Size(99, 87);
+            this.labCounter.Size = new System.Drawing.Size(117, 87);
             this.labCounter.TabIndex = 16;
-            this.labCounter.Text = "5";
             this.labCounter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // button6
@@ -206,35 +205,40 @@
             // 
             // lab2
             // 
-            this.lab2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.lab2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lab2.BackColor = System.Drawing.Color.White;
+            this.lab2.Font = new System.Drawing.Font("Mistral", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lab2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lab2.Location = new System.Drawing.Point(230, 368);
+            this.lab2.Location = new System.Drawing.Point(231, 367);
             this.lab2.Name = "lab2";
-            this.lab2.Size = new System.Drawing.Size(43, 35);
+            this.lab2.Size = new System.Drawing.Size(50, 35);
             this.lab2.TabIndex = 19;
-            this.lab2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lab2.Text = "<3";
+            this.lab2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lab1
             // 
-            this.lab1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.lab1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lab1.BackColor = System.Drawing.Color.White;
+            this.lab1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lab1.Font = new System.Drawing.Font("Mistral", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lab1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lab1.Location = new System.Drawing.Point(185, 368);
             this.lab1.Name = "lab1";
-            this.lab1.Size = new System.Drawing.Size(39, 35);
+            this.lab1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lab1.Size = new System.Drawing.Size(50, 35);
             this.lab1.TabIndex = 20;
-            this.lab1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lab1.Text = "<3";
+            this.lab1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lab3
             // 
-            this.lab3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.lab3.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lab3.BackColor = System.Drawing.Color.White;
+            this.lab3.Font = new System.Drawing.Font("Mistral", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lab3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lab3.Location = new System.Drawing.Point(279, 368);
+            this.lab3.Location = new System.Drawing.Point(272, 367);
             this.lab3.Name = "lab3";
-            this.lab3.Size = new System.Drawing.Size(43, 35);
+            this.lab3.Size = new System.Drawing.Size(51, 35);
             this.lab3.TabIndex = 21;
+            this.lab3.Text = "<3";
             this.lab3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Form1
@@ -244,8 +248,8 @@
             this.ClientSize = new System.Drawing.Size(509, 500);
             this.ControlBox = false;
             this.Controls.Add(this.lab3);
-            this.Controls.Add(this.lab1);
             this.Controls.Add(this.lab2);
+            this.Controls.Add(this.lab1);
             this.Controls.Add(this.labState);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.labCounter);
@@ -276,8 +280,8 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label labState;
         private System.Windows.Forms.Label lab2;
-        private System.Windows.Forms.Label lab1;
         private System.Windows.Forms.Label lab3;
+        private System.Windows.Forms.Label lab1;
 
     }
 }

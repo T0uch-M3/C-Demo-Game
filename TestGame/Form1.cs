@@ -63,13 +63,16 @@ namespace TestGame
         System.Drawing.Color dark = System.Drawing.Color.FromArgb(255,64, 64, 64);
         System.Drawing.Color light = System.Drawing.Color.FromArgb(255,224,224,224);
         Boolean testStart = false;
-        int count = 5;           //this for game start countdown
+        int count = 11;           //this for game start countdown
         int currentPos = 0;      //this for tracking how many button got pressed
         Boolean jackPot = true;  //tracking if a chain achieved 
         string temp;
         Boolean advance = true;
         int duplicate = 0;
         Boolean reset = false;
+        Boolean btnLock = true;//this to unlock buttons after the timer reach 0
+        DialogResult drEnd;
+        int nbrHearts = 3;//number of hears, 0 = game over
 
         //************note*************
         //try to randomize the button text (+ or =)
@@ -82,131 +85,163 @@ namespace TestGame
             reset = false;
 
             Button btn = (Button)sender;//cast to the wanted type of obj
-            if (isDown(btn))
+            if (btnLock == false)
             {
-                if (!isUp(btn))
+                if (isDown(btn))
                 {
-                    System.Console.WriteLine(btn.Text.ToString());
-
-                    btnHashCode[currentPos] = sender.GetHashCode().ToString();
-                    btnArray[currentPos] = btn;
-
-                    System.Console.WriteLine("Hash code 0 = " + btnHashCode[0]);
-                    System.Console.WriteLine("Hash code 1 = " + btnHashCode[1]);
-                    //System.Console.WriteLine("Hash code 2 = " + btnHashCode[2]);
-
-                    if (currentPos == 0)
-                        tab[currentPos] = btn.Text.ToString();//get the btn text put it in an array
-                    else
-                        //if(currentPos>0)
-                        for (int i = 0; i < currentPos; i++)
-                        {
-                            if (btnHashCode[i].Equals(sender.GetHashCode().ToString()))
-                            {//will check if there's a button with the same hash code as the current pressing button, in the array, it should find just one, more is wrong
-                                System.Console.WriteLine("ONE SPOTED");
-                                duplicate++;
-                                System.Console.WriteLine(duplicate.ToString());
-                                advance = false;
-                            }
-                        }
-                    if (advance == true)
-                        tab[currentPos] = btn.Text.ToString();//get the btn text put it in an array
-                    //****************************************************************
-                    switch (currentPos)
+                    if (!isUp(btn))
                     {
-                        case 0:
-                            lab1.Text = btn.Text.ToString();
-                            break;
-                        case 1:
-                            lab2.Text = btn.Text.ToString();
-                            break;
-                        case 2:
-                            lab3.Text = btn.Text.ToString();
-                            break;
-                    }
-                    //*****************************************************************
-                    //currentPos++;//1 after pressing the first button, 2 after pressing the second ...
-                    temp = tab[0];//assign the first spot for later comparisons 
-                    if (currentPos > 0 && advance == true)
-                    {
-                        //System.Console.WriteLine("entered");
-                        //******************************************************
-                        for (int i = 0; i < currentPos + 1; i++)
-                        {
-                            //System.Console.WriteLine("nothing founded");
-                            if (!temp.Equals(tab[i]))
-                            {
-                                jackPot = false;
-                                System.Console.WriteLine("false");
-                            }
-                        }
-                        //*****************************************************
+                        System.Console.WriteLine(btn.Text.ToString());
 
-                        //*****************************************************
-                        if (jackPot == true)
-                        {
-                            saveButton(btnArray);
-                            if (currentPos == 1)
+                        btnHashCode[currentPos] = sender.GetHashCode().ToString();
+                        btnArray[currentPos] = btn;
+
+                        System.Console.WriteLine("Hash code 0 = " + btnHashCode[0]);
+                        System.Console.WriteLine("Hash code 1 = " + btnHashCode[1]);
+                        //System.Console.WriteLine("Hash code 2 = " + btnHashCode[2]);
+
+                        if (currentPos == 0)
+                            tab[currentPos] = btn.Text.ToString();//get the btn text put it in an array
+                        else
+                            //if(currentPos>0)
+                            for (int i = 0; i < currentPos; i++)
                             {
-                                labState.Text = "Good";
+                                if (btnHashCode[i].Equals(sender.GetHashCode().ToString()))
+                                {//will check if there's a button with the same hash code as the current pressing button, in the array, it should find just one, more is wrong
+                                    System.Console.WriteLine("ONE SPOTED");
+                                    duplicate++;
+                                    System.Console.WriteLine(duplicate.ToString());
+                                    advance = false;
+                                }
+                            }
+                        if (advance == true)
+                            tab[currentPos] = btn.Text.ToString();//get the btn text put it in an array
+                        //****************************************************************
+                        //switch (currentPos)
+                        //{
+                        //    case 0:
+                        //        lab1.Text = btn.Text.ToString();
+                        //        break;
+                        //    case 1:
+                        //        lab2.Text = btn.Text.ToString();
+                        //        break;
+                        //    case 2:
+                        //        lab3.Text = btn.Text.ToString();
+                        //        break;
+                        //}
+                        //*****************************************************************
+                        //currentPos++;//1 after pressing the first button, 2 after pressing the second ...
+                        temp = tab[0];//assign the first spot for later comparisons 
+                        if (currentPos > 0 && advance == true)
+                        {
+                            //System.Console.WriteLine("entered");
+                            //******************************************************
+                            for (int i = 0; i < currentPos + 1; i++)
+                            {
+                                //System.Console.WriteLine("nothing founded");
+                                if (!temp.Equals(tab[i]))
+                                {
+                                    jackPot = false;
+                                    System.Console.WriteLine("false");
+                                }
+                            }
+                            //*****************************************************
+
+                            //*****************************************************
+                            if (jackPot == true)
+                            {
+                                saveButton(btnArray);//this mark in positionTab this two buttons with 1 instead of 0
+                                if (currentPos == 1)
+                                {
+                                    labState.Text = "Good";
+                                    System.Console.WriteLine("reset");
+                                    reset = true;
+                                    //if (currentPos == 3 || currentPos == 2)
+                                    //{
+                                    tab = new string[2];//empty the array
+                                    btnArray = new Button[2];
+                                    btnHashCode = new String[2];
+                                    //}
+                                    currentPos = 0;//restart the button pressed counter to 0
+
+                                }
+
+                            }
+                            //====================================================    
+                            else
+                            {
+                                labState.Text = "Bad";
+                                hearts();
                                 System.Console.WriteLine("reset");
                                 reset = true;
+                                hide(btnArray);
                                 //if (currentPos == 3 || currentPos == 2)
                                 //{
-                                tab = new string[2];//empty the array
+                                tab = new string[2];
                                 btnArray = new Button[2];
                                 btnHashCode = new String[2];
                                 //}
-                                currentPos = 0;//restart the button pressed counter to 0
+
+                                currentPos = 0;
+                                jackPot = true;
 
                             }
-
+                            //***************************************************
                         }
-                        //====================================================    
-                        else
+
+                        if (btn.ForeColor.Equals(light))//this for a single button, it change it's color with every click
                         {
-                            labState.Text = "Wrong";
-
-                            System.Console.WriteLine("reset");
-                            reset = true;
-                            hide(btnArray);
-                            //if (currentPos == 3 || currentPos == 2)
-                            //{
-                            tab = new string[2];
-                            btnArray = new Button[2];
-                            btnHashCode = new String[2];
-                            //}
-
-                            currentPos = 0;
-                            jackPot = true;
-
+                            //btn.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
+                            //System.Console.WriteLine("to dark");
+                            //btnHashCode = new string[3];
                         }
-                        //***************************************************
-                    }
-
-                    if (btn.ForeColor.Equals(light))//this for a single button, it change it's color with every click
-                    {
-                        //btn.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);
-                        //System.Console.WriteLine("to dark");
-                        //btnHashCode = new string[3];
-                    }
-                    else//change to light
-                    {
-                        btn.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
-                    }
-                    //if (currentPos == 1){
-                    //    currentPos = 0;
-                    //    System.Console.WriteLine("current pos set to 0");
-                    //}
-
-                    //else
-                    if (reset == false)
-                    {
-                        currentPos++;//1 after pressing the first button, 2 after pressing the second ...
-                        System.Console.WriteLine("curent pot ++");
+                        else//change to light
+                        {
+                            btn.ForeColor = System.Drawing.Color.FromArgb(224, 224, 224);
+                        }
+                        
+                        if (reset == false)
+                        {
+                            currentPos++;//1 after pressing the first button, 2 after pressing the second ...
+                            System.Console.WriteLine("current pot ++");
+                        }
+                        if (checkDone())
+                        {
+                            drEnd = MessageBox.Show("Play Again", "Good Job", MessageBoxButtons.YesNo);
+                            startTimer.Stop();
+                        }
+                        if (drEnd == DialogResult.Yes)
+                            Application.Restart();
+                        if(drEnd == DialogResult.No)
+                            Application.Exit();
                     }
                 }
             }
+        }
+
+        private void hearts()
+        {
+            nbrHearts--;
+            if (nbrHearts == 2)
+                lab3.Text = null;
+            if (nbrHearts == 1)
+                lab2.Text = null;
+            if (nbrHearts == 0)
+            {
+                lab1.Text = null;
+
+            }
+                
+        }
+
+        private Boolean checkDone()
+        {
+            for (int i = 0; i < allPostion.Length; i++)
+            {
+                if (allPostion[i] == 0)
+                    return false;//if it find ANY 0 in the tab, this mean it still didn't get all the buttons (RIP)
+            }
+            return true;
         }
 
         private void saveButton(Array ar)
@@ -218,7 +253,7 @@ namespace TestGame
                     if (btnArray[j].GetHashCode().Equals(allButton[i].GetHashCode()))
                     {
                         allPostion[i] = 1;
-                        System.Console.WriteLine("found it fuck yeah");
+                        
                         System.Console.WriteLine(btnArray[j].GetHashCode());
                         System.Console.WriteLine(allButton[i].GetHashCode());
                         System.Console.WriteLine(i);
@@ -286,7 +321,9 @@ namespace TestGame
 
         private void quitGame(object sender, EventArgs e)
         {
-            Form1.ActiveForm.Close();
+            DialogResult dr = MessageBox.Show("Confirmation", "Close Game?", MessageBoxButtons.OKCancel);
+            if(dr == DialogResult.OK)
+                Form1.ActiveForm.Close();
         }
 
 
@@ -295,19 +332,33 @@ namespace TestGame
         {
             System.Console.WriteLine("test with timer");
             count--;
-            labCounter.Text = (count).ToString();
+            if(count <= 10)
+                labCounter.Text = (count).ToString();
+            if (count == 10)
+            {
+                foreach (Button btn in mtPanel.Controls.OfType<Button>())
+                {
+                    btn.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);//hide them back
+                    
+                    labCounter.Text = (count).ToString();
+                    testStart = false;
+                    btnLock = false;
+                }
+            }
+            if (count < 5)
+            {
+                labCounter.ForeColor.ToKnownColor = System.Drawing.KnownColor.Red;
+            }
             if (count == 0)
             {
                 startTimer.Stop();
-                
-                foreach (Button btn in mtPanel.Controls.OfType<Button>())
-                {
-                    btn.ForeColor = System.Drawing.Color.FromArgb(64, 64, 64);//hide them up
-                    count = 5;
-                    labCounter.Text = (count).ToString();
-                    testStart = false;
-                }
+                DialogResult drGO = MessageBox.Show("Play Again", "You Run out of Time :(", MessageBoxButtons.YesNo);
+                if (drGO == DialogResult.Yes)
+                    Application.Restart();
+                if (drGO == DialogResult.No)
+                    Application.Exit();
             }
+
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -324,6 +375,7 @@ namespace TestGame
             //System.Console.WriteLine("Hash code 2 = " + btnHashCode[2]);
             foreach(int i in allPostion)
                 System.Console.WriteLine(allPostion[i]);
+            
         }
 
     }
